@@ -3,3 +3,8 @@
 
 - name: Add raspi-config
   copy: src={{raspiconfig}} dest=/boot/config.txt mode=0755 owner=root group=root
+
+- name: Install utilities
+  apt: name={{item}} state=present
+  with_items:
+    - vim
