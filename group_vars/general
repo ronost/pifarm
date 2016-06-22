@@ -1,0 +1,3 @@
+sudoers:
+  - pi
+become: yes

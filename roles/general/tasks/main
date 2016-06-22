@@ -1,0 +1,5 @@
+- name: Set hostname
+  hostname: name={{hostname}}
+
+- name: Add raspi-config
+  copy: src={{raspiconfig}} dest=/boot/config.txt mode=0755 owner=root group=root
