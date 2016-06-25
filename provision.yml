@@ -1,5 +1,5 @@
-- hosts: general
+- hosts: common
   vars_files:
     - group_vars/secrets.yml
   roles:
-    - { role: general }
+    - { role: common }
