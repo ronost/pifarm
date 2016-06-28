@@ -1,5 +1,16 @@
+- hosts: backup-servers
+  vars_files:
+    - group_vars/secrets.yml
+  roles: 
+  - common
+  - extra-storage
+
 - hosts: common
   vars_files:
     - group_vars/secrets.yml
   roles:
     - { role: common }
+
+- hosts: extra-storage
+  roles:
+    - { role: extra-storage }
