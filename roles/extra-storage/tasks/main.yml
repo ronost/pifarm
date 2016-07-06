@@ -1,0 +1,19 @@
+- name: Get hdd fs type for device
+  command: /sbin/blkid -s TYPE -o value "{{ hdd_dev }}"
+  register: disk_fs_type
+  changed_when: false
+  when: hdd_dev is defined
+
+- name: Format device to ext4
+  filesystem: fstype=ext4 dev={{ hdd_dev }} force=yes
+  register: format_dev
+  when: hdd_dev is defined and disk_fs_type.stdout != "ext4"
+  become: true
+
+- name: Get UUID for device
+  command: /sbin/blkid -s UUID -o value "{{ hdd_dev }}"
+  register: disk_uuid
+  changed_when: false
+  when: format_dev|changed
+
+
