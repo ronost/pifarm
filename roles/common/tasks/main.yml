@@ -9,6 +9,10 @@
 
 - name: Add raspi-config
   copy: src={{raspiconfig}} dest=/boot/config.txt mode=0755 owner=root group=root
+  notify:
+    - Reboot raspi
+    - Wait for raspi to come back up
+  become: true
 
 - name: Install utilities
   apt: name={{item}} state=present

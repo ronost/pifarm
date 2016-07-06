@@ -1,0 +1,15 @@
+- name: Reboot raspi
+  shell: shutdown -r now "Ansible updates triggered"
+  async: 1
+  poll: 0
+  become: true
+  ignore_errors: true
+
+- name: Wait for raspi to come back up
+  local_action: 
+    module: wait_for
+      host={{ inventory_hostname }}
+      port=22
+      delay=1
+      timeout=300
+  become: false
