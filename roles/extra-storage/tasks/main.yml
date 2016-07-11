@@ -16,4 +16,11 @@
   changed_when: false
   when: format_dev|changed
 
+- name: Add home partition to fstab
+  lineinfile: dest=/etc/fstab line="UUID={{ disk_uuid.stdout }}   /media/home    ext4          defaults       0       2"
+  become: true
+  when: disk_uuid is defined and disk_uuid.stdout is defined
 
+- name: Create /media/home
+  file: path=/media/home state=directory
+  become: true
