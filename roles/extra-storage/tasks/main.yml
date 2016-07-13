@@ -15,6 +15,11 @@
   become: true
 
 - name: Mount home partition and add configuration to fstab
-  mount: name=/media/home src="{{ home_hdd_dev }}" fstype=ext4 opts=defaults dump=0 passno=2 state=present
+  mount: name=/media/home src="{{ home_hdd_dev }}" fstype=ext4 opts=defaults dump=0 passno=2 state=mounted
+  become: true
+  when: format_dev|changed
+
+- name: Synchronize files from /home to /media/home
+  command: /usr/bin/rsync -aXS /home/. /media/home/.
   become: true
   when: format_dev|changed
