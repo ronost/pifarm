@@ -1,26 +1,20 @@
 - name: Get hdd fs type for device
-  command: /sbin/blkid -s TYPE -o value "{{ hdd_dev }}"
+  command: /sbin/blkid -s TYPE -o value "{{ home_hdd_dev }}"
   register: disk_fs_type
   changed_when: false
-  when: hdd_dev is defined
+  when: home_hdd_dev is defined
 
 - name: Format device to ext4
-  filesystem: fstype=ext4 dev={{ hdd_dev }} force=yes
+  filesystem: fstype=ext4 dev={{ home_hdd_dev }} force=yes
   register: format_dev
-  when: hdd_dev is defined and disk_fs_type.stdout != "ext4"
+  when: home_hdd_dev is defined and disk_fs_type.stdout != "ext4"
   become: true
-
-- name: Get UUID for device
-  command: /sbin/blkid -s UUID -o value "{{ hdd_dev }}"
-  register: disk_uuid
-  changed_when: false
-  when: format_dev|changed
-
-- name: Add home partition to fstab
-  lineinfile: dest=/etc/fstab line="UUID={{ disk_uuid.stdout }}   /media/home    ext4          defaults       0       2"
-  become: true
-  when: disk_uuid is defined and disk_uuid.stdout is defined
 
 - name: Create /media/home
   file: path=/media/home state=directory
   become: true
+
+- name: Mount home partition and add configuration to fstab
+  mount: name=/media/home src="{{ home_hdd_dev }}" fstype=ext4 opts=defaults dump=0 passno=2 state=present
+  become: true
+  when: format_dev|changed
