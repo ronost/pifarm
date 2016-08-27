@@ -1,0 +1,1 @@
+*/5 * * * * root echo url="https://www.duckdns.org/update?domains={{ duckdns_subdomains }}&token={{ duckdns_token }}&ip=" | curl -k -o /var/log/duckdns.log -K - >/dev/null 2>&1

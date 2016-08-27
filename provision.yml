@@ -14,3 +14,9 @@
 - hosts: extra-storage
   roles:
     - { role: extra-storage }
+
+- hosts: duckdns
+  vars_files:
+    - group_vars/secrets.yml
+  roles:
+    - { role: duckdns }

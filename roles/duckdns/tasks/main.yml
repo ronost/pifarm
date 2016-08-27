@@ -1,0 +1,3 @@
+- name: Add cronjob for updating duckdns
+  template: src=duckdns.cron dest=/etc/cron.d/duckdns.cron owner=root group=root mode=0755
+  become: true

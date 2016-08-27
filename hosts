@@ -2,3 +2,6 @@
 
 [backup-servers]
 raspi1
+
+[duckdns]
+raspi1
