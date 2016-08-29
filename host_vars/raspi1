@@ -5,3 +5,4 @@ ansible_ssh_host: 192.168.0.100
 
 # from `blkid` on host:
 home_hdd_dev: /dev/sda1
+

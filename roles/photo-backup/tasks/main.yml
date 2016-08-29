@@ -1,0 +1,6 @@
+- name: Mount photo source drive and add configuration to fstab
+  mount: name={{ item.value.destination }} src={{ item.value.source }} fstype={{ item.value.type }} opts="username={{ item.value.username }},password={{ item.value.password }},uid={{ item.value.uid }},gid={{ item.value.gid }}" state=mounted
+  with_dict: "{{ source_drives }}"
+  when: "{{ source_drives is defined }}"
+  become: true
+
