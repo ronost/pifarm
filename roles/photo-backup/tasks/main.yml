@@ -1,5 +1,9 @@
 - name: Mount photo source drive and add configuration to fstab
-  mount: name={{ item.value.destination }} src={{ item.value.source }} fstype={{ item.value.type }} opts="username={{ item.value.username }},password={{ item.value.password }},uid={{ item.value.uid }},gid={{ item.value.gid }}" state=mounted
+  mount: name={{ item.value.destination }} src={{ item.value.path }} fstype={{ item.value.type }} opts="username={{ item.value.username }},password={{ item.value.password }},uid={{ item.value.uid }},gid={{ item.value.gid }}" state=mounted
   with_dict: "{{ source_drives }}"
   when: "{{ source_drives is defined }}"
 
+- name: Mount photo destination drive and add configuration to fstab
+  mount: name={{ item.value.destination }} src={{ item.value.path }} fstype={{ item.value.type }} opts="username={{ item.value.username }},password={{ item.value.password }},uid={{ item.value.uid }},gid={{ item.value.gid }}" state=mounted
+  with_dict: "{{ dest_drives }}"
+  when: "{{ dest_drives is defined }}"
