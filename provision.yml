@@ -1,4 +1,5 @@
 - hosts: backup-servers
+  become: true
   vars_files:
     - group_vars/secrets.yml
   roles: 
@@ -7,22 +8,26 @@
   - photo-backup
 
 - hosts: common
+  become: true
   vars_files:
     - group_vars/secrets.yml
   roles:
     - { role: common }
 
 - hosts: extra-storage
+  become: true
   roles:
     - { role: extra-storage }
 
 - hosts: duckdns
+  become: true
   vars_files:
     - group_vars/secrets.yml
   roles:
     - { role: duckdns }
 
 - hosts: photo-backup
+  become: true
   vars_files:
     - group_vars/secrets.yml
   roles:

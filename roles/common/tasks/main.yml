@@ -5,18 +5,15 @@
   user: name={{ item.value.name }} password={{ item.value.password }} groups={{ item.value.groups }} shell={{ item.value.shell }} state=present 
   with_dict: "{{ users }}"
   when: "{{ users is defined }}"
-  become: true
 
 - name: Add raspi-config
   copy: src={{raspiconfig}} dest=/boot/config.txt mode=0755 owner=root group=root
   notify:
     - Reboot raspi
     - Wait for raspi to come back up
-  become: true
 
 - name: Install utilities
   apt: name={{item}} state=present
   with_items:
     - vim
     - telnet
-  become: true

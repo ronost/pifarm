@@ -8,18 +8,14 @@
   filesystem: fstype=ext4 dev={{ home_hdd_dev }} force=yes
   register: format_dev
   when: home_hdd_dev is defined and disk_fs_type.stdout != "ext4"
-  become: true
 
 - name: Create /media/home
   file: path=/media/home state=directory
-  become: true
 
 - name: Mount home partition and add configuration to fstab
   mount: name=/media/home src="{{ home_hdd_dev }}" fstype=ext4 opts=defaults dump=0 passno=2 state=mounted
-  become: true
   when: format_dev|changed
 
 - name: Synchronize files from /home to /media/home
   command: /usr/bin/rsync -aXS /home/. /media/home/.
-  become: true
   when: format_dev|changed
