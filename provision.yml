@@ -5,7 +5,7 @@
   roles: 
   - common
   - extra-storage
-  - photo-backup
+  - backup
 
 - hosts: common
   become: true
@@ -26,9 +26,9 @@
   roles:
     - { role: duckdns }
 
-- hosts: photo-backup
+- hosts: backup
   become: true
   vars_files:
     - group_vars/secrets.yml
   roles:
-    - { role: photo-backup }
+    - { role: backup }
