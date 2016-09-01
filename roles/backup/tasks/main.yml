@@ -7,3 +7,9 @@
   mount: name={{ item.value.destination }} src={{ item.value.path }} fstype={{ item.value.type }} opts="username={{ item.value.username }},password={{ item.value.password }},uid={{ item.value.uid }},gid={{ item.value.gid }}" state=mounted
   with_dict: "{{ dest_drives }}"
   when: "{{ dest_drives is defined }}"
+
+- name: Add backup.sh
+  copy: src=backup.sh dest=/usr/local/bin/backup.sh mode=0755 owner=root group=root
+
+- name: Add cronjob for backup
+  copy: src=backup.cron dest=/etc/cron.d/backup owner=root group=root mode=0755
